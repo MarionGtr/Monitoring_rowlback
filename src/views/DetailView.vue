@@ -6,19 +6,19 @@ import TestComponent from '../components/TestComponent.vue';
 </script>
 
 <template>
-  <main>
+  <div class="body details">
+    <main>
       <Header />
-  </main>
+    </main>
 
-<TestComponent />
-
+    <TestComponent />
+  </div>
 </template>
 
 
 <style lang="scss">
-
-html{
+.details {
   background-color: $blue-light;
+  padding: 2vh 8vw 0vh 8vw;
 }
-
 </style>
