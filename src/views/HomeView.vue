@@ -8,23 +8,31 @@ import ClientCard from '../components/ClientCard.vue';
   <main>
     <div class="body-home">
       <div class="nav">
-        <Header :show-logo="true" class="home-static" />
+        <Header class="home-static" />
       </div>
-      
-        <ClientCard />
+
+      <ClientCard />
 
     </div>
 
   </main>
 </template>
 
+
+
 <style lang="scss">
+
+.body-home{
+ padding:2vh 8vw 0vh 8vw;
+}
+
 html {
   background-color: #B1E4D1;
 
 }
 
-.nav{
-  
+.nav {
+
+  align-items: center;
 }
 </style>
