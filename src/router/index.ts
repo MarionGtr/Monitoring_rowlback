@@ -11,11 +11,13 @@ const router = createRouter({
       component: HomeView,
     },
 
+
     {
       path: '/detail',
       name: 'detail',
       component: DetailView,
     }
+
 
   ],
 })
