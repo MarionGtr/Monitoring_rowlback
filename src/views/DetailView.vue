@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
+import Header from '@/components/Header.vue';
 import TestComponent from '../components/TestComponent.vue';
 
 </script>
 
 <template>
   <main>
-      <h1 class="test">test</h1>
+      <Header />
   </main>
 
 <TestComponent />
