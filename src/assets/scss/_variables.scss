@@ -4,8 +4,16 @@
 
 body {
     font-family: "Space Grotesk", sans-serif;
-  }
+    margin: 0;
+     
+}
 
+.body {
+  height: fit-content;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
 
 // font colours
 $onyx: #2b2f2e;
@@ -24,9 +32,12 @@ $blue : #B7DBE9;
 $blue-light : #CDE6F0;
 $red-light : #CE8A8B;
 $yellow : #FCFC68;
+$yellow-light: #E2E2C9;
 $green-light : #B1E4D1;
 $green-light2 : #C8EDDD;
+$purple-light: #d7d4df;
+$purple-lighter: #e9e3f1;
 
-body {
-    font-family: "Space Grotesk", sans-serif;
-  }
+
+
+
