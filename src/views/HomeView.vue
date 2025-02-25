@@ -6,31 +6,31 @@ import ClientCard2 from '@/components/ClientCard2.vue';
 </script>
 
 <template>
+  <div class="body home">
   <main>
-    <div class="body home">
-      <div class="nav">
-        <Header class="home-static" />
-      </div>
 
-      <!-- <ClientCard /> -->
-      <ClientCard2 />
-
+    <div class="nav">
+      <Header class="home-static" />
     </div>
 
+    <!-- <ClientCard /> -->
+    <ClientCard2 />
+
+
+
   </main>
+  </div>
 </template>
 
 
 
 <style lang="scss">
-
-.home{
+.home {
   background-color: $green-light2;
   padding: 2vh 8vw 0vh 8vw;
 }
 
 .nav {
-
   align-items: center;
 }
 </style>
