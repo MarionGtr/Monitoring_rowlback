@@ -56,10 +56,11 @@
 .titleHome {
     font-size: 3vw;
     padding-top: 2vh;
-    border-bottom: 1px solid black;    
+    border-bottom: 1px solid black;  
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
 
 .titleHome p {
     margin:0.8vh;

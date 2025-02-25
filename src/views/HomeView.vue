@@ -6,6 +6,7 @@ import ClientCard2 from '@/components/ClientCard2.vue';
 </script>
 
 <template>
+
   <div class="body home">
   <main>
 
@@ -20,6 +21,7 @@ import ClientCard2 from '@/components/ClientCard2.vue';
 
   </main>
   </div>
+
 </template>
 
 
