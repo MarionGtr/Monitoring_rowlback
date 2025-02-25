@@ -58,7 +58,9 @@
     padding-top: 2vh;
     border-bottom: 1px solid black;
     width: 100%;
+    height: fit-content;
 }
+
 
 .titleHome p {
     margin:0.8vh;

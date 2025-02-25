@@ -6,18 +6,15 @@ import ClientCard2 from '@/components/ClientCard2.vue';
 </script>
 
 <template>
-  <main>
-    <div class="body home">
+  <div class="body home"><main>
+
       <div class="nav">
         <Header class="home-static" />
       </div>
 
-      <!-- <ClientCard /> -->
       <ClientCard2 />
 
-    </div>
-
-  </main>
+  </main></div>
 </template>
 
 
