@@ -56,8 +56,9 @@
 .titleHome {
     font-size: 3vw;
     padding-top: 2vh;
-    border-bottom: 1px solid black;
-    width: 100%;
+    border-bottom: 1px solid black;    
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .titleHome p {
@@ -84,7 +85,7 @@
     height: 14rem;
     width: 14rem;
     margin: 1rem;
-    border-radius: 50vw;
+    border-radius: 2vw;
     border: 2px solid #f8f88f;
     text-decoration: none;
     transition: transform 0.3s ease;
