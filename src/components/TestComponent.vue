@@ -67,7 +67,6 @@
   background-color: $blue;
   display: flex;
   justify-content: center;
-  margin: 2vw;
   height: fit-content;
   border-radius: 20px;
   flex-direction: column;
@@ -163,100 +162,5 @@ body{
 
 }
 
-@media(min-width:2000px){
-  .bodyTest {
-  background-color: $blue;
-  display: flex;
 
-  justify-content: center;
-  margin: 3vw;
-  height: fit-content;
-  border-radius: 20px;
-  flex-direction: column;
-}
-
-.headerTest {
-  display: flex;
-  justify-content: center;
-  gap: 20vw;
-  font-size: 3vh;
-}
-
-.recapTest{
-  display: flex;
-  gap:1vw;
-  align-items: center;
-}
-
-.listTest{
-  padding: 3vh;
-}
-
-.buttonTest{
-  display: flex;
-  gap : 0.5vw;
-  align-items: center;
-}
-
-.buttonTest button:hover{
-  background-color: rgb(226, 216, 216);
-}
-
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-}
-
-li {
-  display: flex;
-  gap: 4vw;
-  align-items: center;
-}
-
-li h5{
-  display: flex;
-  width: 10vw;
-  align-items: center;
-}
-
-li p{
-  width: 30vw;
-  font-size: larger;
-}
-
-button {
-  padding: 3px;
-  border-radius: 15px;
-  height: 4vh;
-  width: 5vw;
-  font-size: 1vh;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-body{
-  font-size:xx-large;
-}
-
-/* Classes pour les états des boutons */
-.status-button {
-  font-weight: bold;
-  color: white;
-}
-
-.statusPassed {
-  background-color: $green;
-
-}
-
-.statusFailed {
-  background-color: $red-light;
-
-}
-
-.statusWarning {
-  background-color: $yellow;
-
-}
-}
 </style>
