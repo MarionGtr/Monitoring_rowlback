@@ -73,9 +73,7 @@ const allClients = computed(() => {
 </script>
 
 <template>
-  <div class="titleHome">
-    <p>Tests Nightwatch</p>
-  </div>
+
 
   <div class="customer-panel">
     <!-- Générer dynamiquement les liens pour tous les clients -->
@@ -91,13 +89,7 @@ const allClients = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.titleHome {
-    font-size: 3vw;
-    padding-top: 2vh;
-    border-bottom: 1px solid black;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
+
 
 .titleHome p {
     margin:0.8vh;
