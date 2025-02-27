@@ -1,7 +1,7 @@
 <script setup lang="ts">
+
 import Header from '@/components/Header.vue';
-import ClientCardTest from '../components/ClientCardTest.vue';
-// import ClientCard2 from '@/components/ClientCard2.vue';
+import ClientCardTest from '@/components/ClientCardTest.vue';
 
 </script>
 
@@ -82,7 +82,7 @@ import ClientCardTest from '../components/ClientCardTest.vue';
   font-size: 1.6rem;
   background-color: $green-light;
   border-radius: 20px;
-  padding-top:4vw; 
+  padding-top:4vw;
   padding-bottom: 4vw;
   max-height: fit-content;
 

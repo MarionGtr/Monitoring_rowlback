@@ -74,6 +74,7 @@ const allClients = computed(() => {
 
 <template>
 
+
   <div class="customerPanel">
     <!-- Générer dynamiquement les liens pour tous les clients -->
     <router-link
