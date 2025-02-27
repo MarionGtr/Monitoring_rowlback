@@ -8,49 +8,48 @@ function getProp(params:string) {
 
 <template>
 
-    <div class="titleHome">
-        <p>Tests Nightwatch</p>
-    </div>
 
-    <div class="customer-panel">
-        <router-link class="customer customer--view beauty-tech" to="/detail/beauty-tech">
-            <span class="customer-name">Beauty Tech</span>
+
+
+    <div class="customerPanel">
+        <router-link class="customer customer--view beauty-tech" to="/detail">
+            <span class="customerName">Beauty Tech</span>
         </router-link>
-        <router-link class="customer customer--view electro-depot" to="/detail/electro-depot">
-            <span class="customer-name">Electro Dépôt</span>
+        <router-link class="customer customer--view electro-depot" to="">
+            <span class="customerName">Electro Dépôt</span>
         </router-link>
         <router-link class="customer customer--view dior" to="">
-            <span class="customer-name">Dior</span>
+            <span class="customerName">Dior</span>
         </router-link>
         <router-link class="customer customer--view tag-heuer" to="">
-            <span class="customer-name">Tag Heuer</span>
+            <span class="customerName">Tag Heuer</span>
         </router-link>
         <router-link class="customer customer--view guerlain" to="">
-            <span class="customer-name">Guerlain</span>
+            <span class="customerName">Guerlain</span>
         </router-link>
         <router-link class="customer customer--view motoblouz" to="">
-            <span class="customer-name">Motoblouz</span>
+            <span class="customerName">Motoblouz</span>
         </router-link>
         <router-link class="customer customer--view nacon" to="">
-            <span class="customer-name">Nacon</span>
+            <span class="customerName">Nacon</span>
         </router-link>
         <router-link class="customer customer--view vds" to="">
-            <span class="customer-name">Vanderschooten</span>
+            <span class="customerName">Vanderschooten</span>
         </router-link>
         <router-link class="customer customer--view bigben" to="">
-            <span class="customer-name">Bigben</span>
+            <span class="customerName">Bigben</span>
         </router-link>
         <router-link class="customer customer--view viseo" to="">
-            <span class="customer-name">Viseo</span>
+            <span class="customerName">Viseo</span>
         </router-link>
         <router-link class="customer customer--view grande-epicerie" to="">
-            <span class="customer-name">La Grande Epicerie</span>
+            <span class="customerName">La Grande Epicerie</span>
         </router-link>
         <router-link class="customer customer--view groupe-fremeaux" to="">
-            <span class="customer-name">Fremaux Delorme</span>
+            <span class="customerName">Fremaux Delorme</span>
         </router-link>
         <router-link class="customer customer--view SDG-distribution" to="">
-            <span class="customer-name">SDG Distribution</span>
+            <span class="customerName">SDG Distribution</span>
         </router-link>
         <router-link class="customer customer--view Rowlback" to="">
             <span class="customer-name">Rowlback</span>
@@ -60,6 +59,9 @@ function getProp(params:string) {
 </template>
 
 <style lang="scss" scoped>
+
+
+
 .titleHome {
     font-size: 3vw;
     padding-top: 2vh;
@@ -69,15 +71,13 @@ function getProp(params:string) {
 }
 
 
-.titleHome p {
-    margin:0.8vh;
-}
 
-.customer-panel {
-    padding-top: 2vw;
-    gap: 2vw;
+
+.customerPanel {
+
+    gap: 0.6vw;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     // background-color: $green-light;
@@ -90,10 +90,10 @@ function getProp(params:string) {
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 14rem;
+    height: 8rem;
     width: 14rem;
     margin: 1rem;
-    border-radius: 2vw;
+    border-radius: 30px;
     border: 2px solid #f8f88f;
     text-decoration: none;
     transition: transform 0.3s ease;
@@ -109,7 +109,7 @@ function getProp(params:string) {
 
 }
 
-.customer-name {
+.customerName {
     color: $onyx;
     font-size: 1.4rem;
     text-align: center;
