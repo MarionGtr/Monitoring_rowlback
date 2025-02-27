@@ -3,16 +3,13 @@
 import Header from '@/components/Header.vue';
 import TestComponent from '../components/TestComponent.vue';
 import {useRoute} from 'vue-router';
-import { computed, ref, watch } from "vue";
+import { computed } from "vue";
 
 
 const route = useRoute();
 const customerId = computed(() => route.params.id as string);
 const name = computed(() => t(`customers.${customerId.value}.name`));
-const title = computed(() => t(`customers.${customerId.value}.title`));
-const description = computed(() => t(`customers.${customerId.value}.description`));
-const distinctive = computed(() => t(`customers.${customerId.value}.distinctive`));
-const flair = computed(() => t(`customers.${customerId.value}.flair`));
+
 
 </script>
 
