@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+function getProp(params:string) {
+  const props = defineProps([params]);
+}
+
 </script>
 
 <template>
@@ -9,10 +13,10 @@
     </div>
 
     <div class="customer-panel">
-        <router-link class="customer customer--view beauty-tech" to="/detail">
+        <router-link class="customer customer--view beauty-tech" to="/detail/beauty-tech">
             <span class="customer-name">Beauty Tech</span>
         </router-link>
-        <router-link class="customer customer--view electro-depot" to="">
+        <router-link class="customer customer--view electro-depot" to="/detail/electro-depot">
             <span class="customer-name">Electro Dépôt</span>
         </router-link>
         <router-link class="customer customer--view dior" to="">
@@ -48,6 +52,9 @@
         <router-link class="customer customer--view SDG-distribution" to="">
             <span class="customer-name">SDG Distribution</span>
         </router-link>
+        <router-link class="customer customer--view Rowlback" to="">
+            <span class="customer-name">Rowlback</span>
+        </router-link>
 
     </div>
 </template>
@@ -56,7 +63,7 @@
 .titleHome {
     font-size: 3vw;
     padding-top: 2vh;
-    border-bottom: 1px solid black;  
+    border-bottom: 1px solid black;
     margin-bottom: 0;
     padding-bottom: 0;
 }

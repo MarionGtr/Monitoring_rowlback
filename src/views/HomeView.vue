@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
-// import ClientCard from '../components/ClientCard.vue';
-import ClientCard2 from '@/components/ClientCard2.vue';
+import ClientCardTest from '@/components/ClientCardTest.vue';
+// import ClientCard2 from '@/components/ClientCard2.vue';
 
 </script>
 
@@ -14,8 +14,8 @@ import ClientCard2 from '@/components/ClientCard2.vue';
       <Header class="home-static" />
     </div>
 
-    <!-- <ClientCard /> -->
-    <ClientCard2 />
+    <ClientCardTest />
+    <!-- <ClientCard2 /> -->
 
 
 

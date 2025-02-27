@@ -6,7 +6,6 @@
 
 <template>
   <main>
-    <button class="backButton"><router-link to="/">RETOUR</router-link></button>
 
 
   <div class="bodyTest">

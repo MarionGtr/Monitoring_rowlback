@@ -1,0 +1,18 @@
+{
+  "customers": {
+    "beauty-tech": {
+      "name": "Beauty Tech",
+      "title": "Solutions technologiques pour l'industrie de la beauté",
+      "description": "Beauty Tech propose des solutions innovantes pour les salons de beauté et les spas.",
+      "distinctive": "Interface utilisateur intuitive et analyses avancées",
+      "flair": "Transformez votre business beauté avec la technologie"
+    },
+    "electro-depot": {
+      "name": "Electro Dépôt",
+      "title": "Votre magasin d'électroménager discount",
+      "description": "Electro Dépôt offre une large gamme de produits électroménagers à prix compétitifs.",
+      "distinctive": "Prix bas garantis et service client exceptionnel",
+      "flair": "Des prix bas tous les jours"
+    }
+  }
+}

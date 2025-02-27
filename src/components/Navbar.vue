@@ -4,9 +4,10 @@
 
 <template>
 <nav class="navbar">
+
     <router-link to="/" class="home-link">Accueil</router-link>
     <span class="title">MONITORING</span>
-    
+
 </nav>
 
 </template>
@@ -64,7 +65,7 @@
 }
 
 .navbar  a[href="/"]:hover::after {
-  width: 72%; 
+  width: 72%;
 }
 
 .navbar  a.highlight-onyx::after,
