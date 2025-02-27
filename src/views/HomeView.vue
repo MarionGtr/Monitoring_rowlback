@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
-// import ClientCard from '../components/ClientCard.vue';
-import ClientCard2 from '@/components/ClientCard2.vue';
+import ClientCardTest from '@/components/ClientCardTest.vue';
+// import ClientCard2 from '@/components/ClientCard2.vue';
 
 </script>
 
 <template>
+
   <div class="body home">
     <main>
 
@@ -17,6 +18,10 @@ import ClientCard2 from '@/components/ClientCard2.vue';
         <p>Tests Nightwatch</p>
         <p>Résultats globaux</p>
       </div>
+
+    <ClientCardTest />
+    <!-- <ClientCard2 /> -->
+
 
       <div class="bodyElements">
         <div class="cardPanel">
@@ -34,6 +39,7 @@ import ClientCard2 from '@/components/ClientCard2.vue';
 
     </main>
   </div>
+
 </template>
 
 

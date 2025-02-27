@@ -2,6 +2,14 @@
 
 import Header from '@/components/Header.vue';
 import TestComponent from '../components/TestComponent.vue';
+import {useRoute} from 'vue-router';
+import { computed } from "vue";
+
+
+const route = useRoute();
+const customerId = computed(() => route.params.id as string);
+const name = computed(() => t(`customers.${customerId.value}.name`));
+
 
 </script>
 
@@ -10,7 +18,7 @@ import TestComponent from '../components/TestComponent.vue';
     <main>
       <Header />
     </main>
-
+      <h2>{{ name }}</h2>
     <TestComponent />
   </div>
 </template>

@@ -1,8 +1,13 @@
 <script setup lang="ts">
 
+function getProp(params:string) {
+  const props = defineProps([params]);
+}
+
 </script>
 
 <template>
+
 
 
 
@@ -46,11 +51,26 @@
         <router-link class="customer customer--view SDG-distribution" to="">
             <span class="customerName">SDG Distribution</span>
         </router-link>
+        <router-link class="customer customer--view Rowlback" to="">
+            <span class="customer-name">Rowlback</span>
+        </router-link>
 
     </div>
 </template>
 
 <style lang="scss" scoped>
+
+
+
+.titleHome {
+    font-size: 3vw;
+    padding-top: 2vh;
+    border-bottom: 1px solid black;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+
 
 
 .customerPanel {

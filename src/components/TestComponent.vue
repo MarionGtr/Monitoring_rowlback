@@ -6,8 +6,7 @@
 
 <template>
   <main>
-    <button class="backButton"><router-link to="/">RETOUR</router-link></button>
-  </main>
+
 
   <div class="bodyTest">
     <div class="headerTest">
@@ -19,7 +18,6 @@
       <ul>
         <li>
         <p>Vérification du flux de connexion utilisateur avec différents rôles</p>
-        <!-- Application de classes dynamiques avec :class et objet -->
         <button class="statusPassed">PASSED</button>
         <h5>20 assertions passed.</h5>
         <div class="buttonTest">
@@ -61,15 +59,15 @@
     </div>
     <div></div>
   </div>
+</main>
 </template>
 
 <style lang="scss">
 .bodyTest {
   background-color: $blue;
   display: flex;
-
   justify-content: center;
-  margin: 3vw;
+  margin: 2vw;
   height: fit-content;
   border-radius: 20px;
   flex-direction: column;
