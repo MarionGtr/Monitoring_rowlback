@@ -1,16 +1,40 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
-</script>
+const { t, te } = useI18n();
+const route = useRoute();
 
-<template>
-<nav class="navbar">
+
+// Obtenir l'ID du client actuel depuis la route si disponible
+const currentClientId = computed(() => {
+  if (route.path.includes('/detail/') && route.params.id) {
+    return route.params.id as string;
+  }
+  return null;
+});
 
     <router-link to="/">Accueil</router-link>
     <span class="title">MONITORING</span>
 
-</nav>
 
-</template>
+// Obtenir le nom du client actuel si disponible
+const currentClientName = computed(() => {
+  if (currentClientId.value && te(`customers.${currentClientId.value}.name`)) {
+    return t(`customers.${currentClientId.value}.name`);
+  }
+  return null;
+});
+</script>
+
+<template>
+  <nav class="navbar">
+      <span v-if="currentClientName" class="currentClient">{{ currentClientName }} </span>
+      <router-link to="/" >Accueil</router-link>
+      <span class="title">MONITORING</span>
+  </nav>
+  </template>
 
 <style lang="scss" scoped>
 
@@ -28,6 +52,7 @@
   z-index: 10;
   height: 10%;
   padding: 2vh;
+  align-items: center;
 }
 
 .navbar a {
@@ -35,6 +60,18 @@
   text-decoration: none;
   font-size: 2vh;
   font-weight: 300;
+  padding: 0 2vw;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  border-right: 1px solid $onyx;
+
+}
+
+.currentClient {
+  color: $onyx;
+  text-decoration: none;
+  font-size: 2vh;
+  font-weight: 400;
   padding: 0 2vw;
   transition: all 0.2s ease-in-out;
   position: relative;
@@ -73,4 +110,5 @@
   background-color: $onyx;
   width: 72%;
 }
+
 </style>

@@ -2,73 +2,53 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-// Définir les props si nécessaire
-const props = defineProps({
-  // Vous pouvez ajouter des props si besoin
-});
+const { t, te } = useI18n();
 
-const { t } = useI18n();
+// Cette fonction extrait tous les clients du fichier de traduction
+const getClientIds = () => {
+  // On stocke les IDs des clients
+  const clientIds = [];
 
-// Extraire dynamiquement les clients du fichier de traduction
-const clients = computed(() => {
-  const result = [];
+  // On obtient toutes les clés qui commencent par "customers."
+  const allKeys = Object.keys(t.value || {});
 
-  try {
-    // Vérifiez si t.value existe et est un objet avant d'appeler Object.keys
-    if (t.value && typeof t.value === 'object') {
-      const prefix = 'customers.';
-
-      // Trouver tous les IDs de clients
-      const clientIds = new Set();
-
-      Object.keys(t.value).forEach(key => {
-        if (key.startsWith(prefix)) {
-          const parts = key.split('.');
-          if (parts.length >= 2) {
-            clientIds.add(parts[1]);
-          }
-        }
-      });
-
-      // Pour chaque ID, récupérer le nom du client
-      Array.from(clientIds).forEach(id => {
-        const name = t(`customers.${id}.name`);
-        if (name && name !== `customers.${id}.name`) { // Vérifier que la traduction existe
-          result.push({
-            id,
-            name
-          });
-        }
-      });
+  // On parcourt les clés pour trouver les IDs des clients
+  allKeys.forEach(key => {
+    if (key.startsWith('customers.')) {
+      const parts = key.split('.');
+      if (parts.length >= 2 && !clientIds.includes(parts[1])) {
+        clientIds.push(parts[1]);
+      }
     }
-  } catch (error) {
-    console.error('Erreur lors de l\'extraction des clients:', error);
-  }
+  });
 
-  return result;
+  return clientIds;
+};
+
+// Liste des clients avec leurs données
+const clients = computed(() => {
+  const clientIds = getClientIds();
+
+  return clientIds.map(id => ({
+    id,
+    name: t(`customers.${id}.name`),
+    title: t(`customers.${id}.title`),
+    description: t(`customers.${id}.description`),
+    distinctive: t(`customers.${id}.distinctive`),
+    flair: t(`customers.${id}.flair`)
+  }));
 });
 
-// Liste statique des clients pour garantir l'affichage même en cas de problème avec les traductions
-const staticClients = [
+// Liste de secours au cas où l'extraction des traductions échoue
+const fallbackClients = [
   { id: 'beauty-tech', name: 'Beauty Tech' },
-  { id: 'electro-depot', name: 'Electro Dépôt' },
-  { id: 'dior', name: 'Dior' },
-  { id: 'tag-heuer', name: 'Tag Heuer' },
-  { id: 'guerlain', name: 'Guerlain' },
-  { id: 'motoblouz', name: 'Motoblouz' },
-  { id: 'nacon', name: 'Nacon' },
-  { id: 'vds', name: 'Vanderschooten' },
-  { id: 'bigben', name: 'Bigben' },
-  { id: 'viseo', name: 'Viseo' },
-  { id: 'grande-epicerie', name: 'La Grande Epicerie' },
-  { id: 'groupe-fremeaux', name: 'Fremaux Delorme' },
-  { id: 'SDG-distribution', name: 'SDG Distribution' },
-  { id: 'Rowlback', name: 'Rowlback' }
+  { id: 'electro-depot', name: 'Electro Dépôt' }
+  // Ajoutez d'autres clients au besoin
 ];
 
-// Utiliser les clients dynamiques si disponibles, sinon utiliser la liste statique
+// On utilise les clients extraits des traductions ou la liste de secours
 const allClients = computed(() => {
-  return clients.value.length > 0 ? clients.value : staticClients;
+  return clients.value.length > 0 ? clients.value : fallbackClients;
 });
 </script>
 
