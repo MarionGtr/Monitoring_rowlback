@@ -73,11 +73,8 @@ const allClients = computed(() => {
 </script>
 
 <template>
-  <div class="titleHome">
-    <p>Tests Nightwatch</p>
-  </div>
 
-  <div class="customer-panel">
+  <div class="customerPanel">
     <!-- Générer dynamiquement les liens pour tous les clients -->
     <router-link
       v-for="client in allClients"
@@ -85,60 +82,54 @@ const allClients = computed(() => {
       :class="['customer', 'customer--view', client.id]"
       :to="`/detail/${client.id}`"
     >
-      <span class="customer-name">{{ client.name }}</span>
+      <span class="customerName">{{ client.name }}</span>
     </router-link>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.titleHome {
-    font-size: 3vw;
-    padding-top: 2vh;
-    border-bottom: 1px solid black;
-    margin-bottom: 0;
-    padding-bottom: 0;
+
+.customerPanel {
+
+gap: 0.6vw;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-wrap: wrap;
+// background-color: $green-light;
+// border-radius: 20px;
 }
 
-.titleHome p {
-    margin:0.8vh;
-}
-
-.customer-panel {
-    padding-top: 2vw;
-    gap: 2vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
 
 .customer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    height: 14rem;
-    width: 14rem;
-    margin: 1rem;
-    border-radius: 2vw;
-    border: 2px solid #f8f88f;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-    background-color: #f8f88f;
-    box-shadow: 2px 2px 6px 0px #817c7c;
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+height: 8rem;
+width: 14rem;
+margin: 1rem;
+border-radius: 30px;
+border: 2px solid #f8f88f;
+text-decoration: none;
+transition: transform 0.3s ease;
+background-color: #f8f88f;
+box-shadow: 2px 2px 6px 0px #817c7c;
 
-    &:hover {
-        transform: scale(1.05);
-        background-color: $yellow;
-        border: 2px solid $yellow;
-    }
+&:hover {
+    transform: scale(1.05);
+    background-color: $yellow;
+    border: 2px solid $yellow;
+
 }
 
-.customer-name {
-    color: $onyx;
-    font-size: 1.4rem;
-    text-align: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
+}
+
+.customerName {
+color: $onyx;
+font-size: 1.4rem;
+text-align: center;
+padding: 1rem;
+border-radius: 0.5rem;
 }
 </style>

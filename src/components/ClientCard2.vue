@@ -61,18 +61,6 @@ function getProp(params:string) {
 <style lang="scss" scoped>
 
 
-
-.titleHome {
-    font-size: 3vw;
-    padding-top: 2vh;
-    border-bottom: 1px solid black;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-
-
-
 .customerPanel {
 
     gap: 0.6vw;
