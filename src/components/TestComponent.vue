@@ -1,5 +1,16 @@
 <script setup lang="ts">
+import { ref } from "vue";
 
+const testResult = ref("");
+
+const runTest = async () => {
+  try {
+    const response = await fetch("http://localhost:3001/launch");
+    testResult.value = await response.text();
+  } catch (error) {
+    testResult.value = "Erreur lors de l'exécution du test.";
+  }
+};
 
 
 </script>
@@ -21,8 +32,9 @@
         <button class="statusPassed">PASSED</button>
         <h5>20 assertions passed.</h5>
         <div class="buttonTest">
-          <button>DETAILS</button>
-          <button>LAUNCH</button>
+          <button >DETAILS</button>
+          <button @click="runTest">LAUNCH</button>
+          <p v-if="testResult">Résultat : {{ testResult }}</p>
         </div>
       </li>
 

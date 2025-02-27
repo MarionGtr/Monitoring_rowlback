@@ -6,6 +6,7 @@ import { computed } from 'vue';
 const { t, te } = useI18n();
 const route = useRoute();
 
+
 // Obtenir l'ID du client actuel depuis la route si disponible
 const currentClientId = computed(() => {
   if (route.path.includes('/detail/') && route.params.id) {
@@ -13,6 +14,10 @@ const currentClientId = computed(() => {
   }
   return null;
 });
+
+    <router-link to="/">Accueil</router-link>
+    <span class="title">MONITORING</span>
+
 
 // Obtenir le nom du client actuel si disponible
 const currentClientName = computed(() => {
