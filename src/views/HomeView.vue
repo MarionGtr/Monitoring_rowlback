@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
-import ClientCardTest from '@/components/ClientCardTest.vue';
+import ClientCardTest from '../components/ClientCardTest.vue';
 // import ClientCard2 from '@/components/ClientCard2.vue';
 
 </script>
 
 <template>
-
   <div class="body home">
     <main>
 
@@ -19,13 +18,9 @@ import ClientCardTest from '@/components/ClientCardTest.vue';
         <p>Résultats globaux</p>
       </div>
 
-    <ClientCardTest />
-    <!-- <ClientCard2 /> -->
-
-
       <div class="bodyElements">
         <div class="cardPanel">
-          <ClientCard2 />
+          <ClientCardTest />
         </div>
         <div class="stat">
           <span>Nombre de tests réalisés</span>
@@ -39,7 +34,6 @@ import ClientCardTest from '@/components/ClientCardTest.vue';
 
     </main>
   </div>
-
 </template>
 
 
