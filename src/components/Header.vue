@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar.vue';
 
 <template>
   <div class="nav">
-    <a href="/"><img src="@/assets/logo.png" class="header-logo" alt="Company logo with an owl instead of the 'o'"></a>
+    <router-link to="/"><img src="@/assets/logo.png" class="header-logo" alt="Company logo with an owl instead of the 'o'"></router-link>
     <Navbar/>
   </div>
 </template>
