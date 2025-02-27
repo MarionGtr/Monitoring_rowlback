@@ -5,7 +5,7 @@
 <template>
 <nav class="navbar">
 
-    <router-link to="/" class="home-link">Accueil</router-link>
+    <router-link to="/">Accueil</router-link>
     <span class="title">MONITORING</span>
 
 </nav>
