@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 
-const command = `npx nightwatch tests/rowlback/rowlbackEndToEndTeam.js`;
+const command = `npx nightwatch nightwatch/tests/rowlback/rowlbackEndToEndClients.js`;
 
 console.log(`Exécution du test : ${command}`);
 

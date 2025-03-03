@@ -31,7 +31,7 @@ const currentClientName = computed(() => {
       <router-link to="/" >Accueil</router-link>
       <span class="title">MONITORING</span>
   </nav>
-  </template>
+</template>
 
 <style lang="scss" scoped>
 
