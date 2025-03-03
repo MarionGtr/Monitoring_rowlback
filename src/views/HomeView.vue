@@ -3,8 +3,6 @@
 import Header from '@/components/Header.vue';
 import ClientCardTest from '@/components/ClientCardTest.vue';
 
-
-
 </script>
 
 <template>

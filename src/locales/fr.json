@@ -1,0 +1,44 @@
+{
+  "customers": {
+    "beauty-tech": {
+      "name": "Beauty Tech",
+      "title": "Solutions technologiques pour l'industrie de la beauté",
+      "description": "Beauty Tech propose des solutions innovantes pour les salons de beauté et les spas.",
+      "distinctive": "Interface utilisateur intuitive et analyses avancées",
+      "flair": "Transformez votre business beauté avec la technologie"
+    },
+    "electro-depot": {
+      "name": "Electro Dépôt",
+      "title": "Votre magasin d'électroménager discount",
+      "description": "Electro Dépôt offre une large gamme de produits électroménagers à prix compétitifs.",
+      "distinctive": "Prix bas garantis et service client exceptionnel",
+      "flair": "Des prix bas tous les jours"
+    },
+    "fremaux-delorme": {
+      "name": "Fremaux Delorme",
+      "title": "Fabrication et distribution de linge de maison haut de gamme.",
+      "description": "Fremaux Delorme est une entreprise familiale spécialisée dans la création, la fabrication et la distribution de linge de maison haut de gamme. Présente dans plus de 70 pays, elle allie savoir-faire traditionnel, exigence de qualité et engagement environnemental pour renforcer sa position de leader international."
+    },
+    "motoblouz": {
+      "name": "Motoblouz",
+      "title": "Vente en ligne spécialisé dans l'équipement moto",
+      "description": "Motoblouz est un site de vente en ligne spécialisé dans l'équipement moto, proposant vêtements, casques, gants et accessoires de qualité. La boutique en ligne met l'accent sur des marques de qualité et offre des conseils personnalisés pour aider les clients à choisir l'équipement adapté à leurs besoins."
+    },
+    "sdg": {
+      "name": "SDG",
+      "title": "Distribution d’équipements et accessoires sportifs.",
+      "description":"SDG Distribution est une entreprise spécialisée dans la distribution d’équipements et accessoires sportifs. Reconnue pour son expertise et sa capacité à sélectionner des produits innovants, elle s’adresse aux professionnels et particuliers en proposant des solutions adaptées aux besoins du marché."
+    },
+    "vanderschooten" : {
+      "name" : "Groupe Vanderschooten",
+      "title" : "Conception et fabrication de linge de maison haut de gamme.",
+      "description" : "Le Groupe Vanderschooten est une entreprise française reconnue pour son expertise dans la conception et la fabrication de linge de maison haut de gamme. Fort d’un héritage textile riche et d’un savoir-faire transmis depuis plusieurs générations, il allie innovation, qualité et élégance pour offrir des collections durables et raffinées."
+    },
+    "viseo" : {
+      "name" : "Viseo",
+      "title" : "Conseil en technologie et l'innovation.",
+      "description" : "Viseo est une entreprise spécialisée dans le conseil en technologie et l'innovation. Elle accompagne ses clients dans la transformation numérique en offrant des solutions sur mesure, notamment dans les domaines de la stratégie digitale, du développement logiciel, de l'intégration de systèmes, et de l'intelligence artificielle. "
+    }
+
+  }
+}
