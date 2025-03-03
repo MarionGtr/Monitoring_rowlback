@@ -1,113 +1,146 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
+// Structure pour les données des tests
 interface Test {
-  id: string;
   name: string;
-  status: "PASSED" | "FAILED" | "WARNING";
+  description: string;
+  status: "PASSED" | "FAILED" | "WARNING" | "PENDING";
   assertions: string;
-  isRunning: boolean;
-  result?: string;
+  results?: string;
 }
 
+// État local des tests
 const tests = ref<Test[]>([
   {
-    id: "loginFlowTest",
-    name: "Vérification du flux de connexion utilisateur avec différents rôles",
+    name: "rowlbackEndToEndClients",
+    description: "Vérification du flux de connexion utilisateur avec différents rôles",
     status: "PASSED",
-    assertions: "20 assertions passed.",
-    isRunning: false
+    assertions: "20 assertions passed."
   },
   {
-    id: "advancedSearchTest",
-    name: "Test de la fonctionnalité de recherche avancée avec filtres multiples",
+    name: "rowlbackResponsive",
+    description: "Test de la fonctionnalité de recherche avancée avec filtres multiples",
     status: "PASSED",
-    assertions: "20 assertions passed.",
-    isRunning: false
+    assertions: "20 assertions passed."
   },
   {
-    id: "responsiveTest",
-    name: "Validation de l'affichage responsive sur différentes tailles d'écran",
+    name: "rowlbackSendForm",
+    description: "Validation de l'affichage responsive sur différentes tailles d'écran",
     status: "FAILED",
-    assertions: "1 assertion failed.",
-    isRunning: false
+    assertions: "1 assertion failed."
   },
   {
-    id: "animationsTest",
-    name: "Contrôle des animations et transitions lors du chargement de page",
+    name: "example",
+    description: "Contrôle des animations et transitions lors du chargement de page",
     status: "WARNING",
-    assertions: "4 assertions passed.",
-    isRunning: false
+    assertions: "4 assertions passed."
   }
 ]);
 
-const totals = ref({
-  total: 4,
-  passed: 2,
-  warning: 1,
-  failed: 1
-});
+// Compteurs de statistiques
+const totalTests = ref(tests.value.length);
+const passedTests = ref(tests.value.filter(t => t.status === "PASSED").length);
+const warningTests = ref(tests.value.filter(t => t.status === "WARNING").length);
+const failedTests = ref(tests.value.filter(t => t.status === "FAILED").length);
 
-// Fonction pour mettre à jour les statistiques
-const updateTotals = () => {
-  totals.value.passed = tests.value.filter(test => test.status === "PASSED").length;
-  totals.value.warning = tests.value.filter(test => test.status === "WARNING").length;
-  totals.value.failed = tests.value.filter(test => test.status === "FAILED").length;
-  totals.value.total = tests.value.length;
-};
+// État pour l'indication de chargement
+const isLoading = ref(false);
+// Test sélectionné pour afficher les détails
+const selectedTest = ref<string | null>(null);
 
-// Fonction pour exécuter un test spécifique
-const runTest = async (testId: string) => {
-  // Trouver le test correspondant
-  const test = tests.value.find(t => t.id === testId);
-  if (!test) return;
+// Méthode pour exécuter un test spécifique
+const runTest = async (testName: string) => {
+  isLoading.value = true;
 
-  // Marquer le test comme en cours d'exécution
-  test.isRunning = true;
+  // Mettre à jour l'état du test pour indiquer qu'il est en cours d'exécution
+  const testIndex = tests.value.findIndex(t => t.name === testName);
+  if (testIndex !== -1) {
+    tests.value[testIndex].status = "PENDING";
+  }
 
   try {
-    // Appeler le point d'API pour lancer le test
-    // Pour le moment, utilisons l'endpoint existant, mais à terme vous pouvez adapter
-    // pour appeler un endpoint spécifique par test
-    const response = await fetch(`http://localhost:3001/launch?testId=${testId}`);
-    const result = await response.text();
+    const response = await fetch(`http://localhost:3001/run-test/${testName}`);
+    const data = await response.json();
 
-    // Mettre à jour le résultat et le statut du test
-    test.result = result;
+    if (data.success) {
+      // Mettre à jour l'état du test avec les résultats
+      if (testIndex !== -1) {
+        tests.value[testIndex].results = data.output;
 
-    // Analyser le résultat pour mettre à jour le statut (exemple simplifié)
-    if (result.toLowerCase().includes("error") || result.toLowerCase().includes("failed")) {
-      test.status = "FAILED";
-      test.assertions = "Test échoué. Voir les détails.";
+        // Analyser sommairement le résultat pour définir le statut
+        if (data.output.includes("FAILED")) {
+          tests.value[testIndex].status = "FAILED";
+          failedTests.value++;
+          if (tests.value[testIndex].status === "PASSED") passedTests.value--;
+          if (tests.value[testIndex].status === "WARNING") warningTests.value--;
+        } else if (data.output.includes("ERROR")) {
+          tests.value[testIndex].status = "WARNING";
+          warningTests.value++;
+          if (tests.value[testIndex].status === "PASSED") passedTests.value--;
+          if (tests.value[testIndex].status === "FAILED") failedTests.value--;
+        } else {
+          tests.value[testIndex].status = "PASSED";
+          passedTests.value++;
+          if (tests.value[testIndex].status === "WARNING") warningTests.value--;
+          if (tests.value[testIndex].status === "FAILED") failedTests.value--;
+        }
+      }
     } else {
-      test.status = "PASSED";
-      test.assertions = "Test réussi.";
+      // En cas d'erreur dans l'exécution du test
+      if (testIndex !== -1) {
+        tests.value[testIndex].status = "FAILED";
+        tests.value[testIndex].results = data.error || "Erreur lors de l'exécution du test";
+      }
     }
   } catch (error) {
-    // En cas d'erreur
-    test.result = "Erreur lors de l'exécution du test.";
-    test.status = "FAILED";
-    test.assertions = "Erreur de connexion au serveur de test.";
+    console.error("Erreur lors de l'exécution du test:", error);
+    if (testIndex !== -1) {
+      tests.value[testIndex].status = "FAILED";
+      tests.value[testIndex].results = "Erreur de connexion au serveur de tests";
+    }
   } finally {
-    // Fin de l'exécution
-    test.isRunning = false;
-    // Mettre à jour les totaux
-    updateTotals();
+    isLoading.value = false;
   }
 };
 
-// Fonction pour afficher/cacher les détails d'un test
-const showDetails = ref<Record<string, boolean>>({});
-
-const toggleDetails = (testId: string) => {
-  showDetails.value[testId] = !showDetails.value[testId];
+// Méthode pour afficher les détails d'un test
+const showDetails = (testName: string) => {
+  selectedTest.value = selectedTest.value === testName ? null : testName;
 };
 
-// Initialisation
-onMounted(() => {
-  updateTotals();
-});
+// Chargement initial des tests disponibles (optionnel)
+onMounted(async () => {
+  try {
+    const response = await fetch("http://localhost:3001/tests");
+    const data = await response.json();
 
+    if (data.success && data.tests.length > 0) {
+      // Mise à jour avec les vrais tests disponibles (sans écraser les données existantes)
+      const availableTests = data.tests;
+
+      // On garde les détails des tests existants et on ajoute les nouveaux
+      const updatedTests = [...tests.value];
+
+      availableTests.forEach(testName => {
+        const existingTest = tests.value.find(t => t.name === testName);
+        if (!existingTest) {
+          updatedTests.push({
+            name: testName,
+            description: `Test ${testName}`,
+            status: "PENDING",
+            assertions: "En attente d'exécution"
+          });
+        }
+      });
+
+      tests.value = updatedTests;
+      totalTests.value = tests.value.length;
+    }
+  } catch (error) {
+    console.error("Erreur lors du chargement des tests disponibles:", error);
+  }
+});
 </script>
 
 <template>
@@ -116,30 +149,37 @@ onMounted(() => {
       <div class="headerTest">
         <div><h3>TOUS LES TESTS</h3></div>
         <div class="recapTest">
-          <h3>TOTAL</h3> <h3>{{ totals.total }}</h3>
-          <h4>PASSED</h4> <h3>{{ totals.passed }}</h3>
-          <h4>WARNING</h4> <h3>{{ totals.warning }}</h3>
-          <h4>FAILED</h4> <h3>{{ totals.failed }}</h3>
+          <h3>TOTAL</h3> <h3>{{ totalTests }}</h3>
+          <h4>PASSED</h4> <h3>{{ passedTests }}</h3>
+          <h4>WARNING</h4> <h3>{{ warningTests }}</h3>
+          <h4>FAILED</h4> <h3>{{ failedTests }}</h3>
         </div>
       </div>
 
       <div class="listTest">
         <ul>
-          <li v-for="test in tests" :key="test.id">
-            <p>{{ test.name }}</p>
-            <button :class="'status' + test.status">{{ test.status }}</button>
+          <li v-for="test in tests" :key="test.name">
+            <p>{{ test.description }}</p>
+            <button :class="[
+              test.status === 'PASSED' ? 'statusPassed' :
+              test.status === 'FAILED' ? 'statusFailed' :
+              test.status === 'WARNING' ? 'statusWarning' : 'statusPending'
+            ]">
+              {{ test.status === 'PENDING' ? 'PENDING' : test.status }}
+            </button>
             <h5>{{ test.assertions }}</h5>
             <div class="buttonTest">
-              <button @click="toggleDetails(test.id)">DETAILS</button>
-              <button @click="runTest(test.id)" :disabled="test.isRunning">
-                {{ test.isRunning ? 'RUNNING...' : 'LAUNCH' }}
+              <button @click="showDetails(test.name)">DETAILS</button>
+              <button @click="runTest(test.name)" :disabled="isLoading">
+                {{ isLoading && selectedTest === test.name ? 'RUNNING...' : 'LAUNCH' }}
               </button>
             </div>
 
-            <!-- Détails du test (conditionnellement affichés) -->
-            <div v-if="showDetails[test.id]" class="test-details">
-              <h4>Détails du test :</h4>
-              <pre>{{ test.result || 'Aucun résultat disponible. Lancez le test d\'abord.' }}</pre>
+            <!-- Section de détails qui s'affiche lorsqu'un test est sélectionné -->
+            <div v-if="selectedTest === test.name" class="testDetails">
+              <h4>Détails du test : {{ test.name }}</h4>
+              <pre v-if="test.results">{{ test.results }}</pre>
+              <p v-else>Aucun résultat disponible. Lancez le test pour voir les détails.</p>
             </div>
           </li>
         </ul>
@@ -166,7 +206,7 @@ onMounted(() => {
 
 .recapTest{
   display: flex;
-  gap:1vw;
+  gap: 1vw;
   align-items: center;
 }
 
@@ -176,17 +216,12 @@ onMounted(() => {
 
 .buttonTest{
   display: flex;
-  gap : 0.5vw;
+  gap: 0.5vw;
   align-items: center;
 }
 
 .buttonTest button:hover{
   background-color: $neon;
-}
-
-.buttonTest button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .backButton a{
@@ -229,6 +264,11 @@ button {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 body{
   font-size: larger;
 }
@@ -239,37 +279,38 @@ body{
   color: white;
 }
 
-.statusPASSED {
+.statusPassed {
   background-color: $green;
 }
 
-.statusFAILED {
+.statusFailed {
   background-color: $red-light;
 }
 
-.statusWARNING {
+.statusWarning {
   background-color: $yellow;
 }
 
-/* Styles pour les détails des tests */
-.test-details {
-  width: 100%;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px;
+.statusPending {
+  background-color: #ccc;
 }
 
-.test-details pre {
+/* Styles pour la section de détails */
+.testDetails {
   width: 100%;
-  white-space: pre-wrap;
-  font-family: monospace;
+  margin-top: 10px;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.testDetails pre {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
   border-radius: 5px;
-  color: white;
-  font-size: 0.9em;
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 300px;
 }
 </style>
