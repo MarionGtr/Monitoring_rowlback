@@ -5,7 +5,7 @@ import { createI18n } from 'vue-i18n';
 import App from './App.vue'
 import router from './router'
 
-import fr from '../locales/fr.json';
+import fr from '@/locales/fr.json';
 
 const i18n = createI18n({
   legacy: false, // Utilisez le mode Composition API
