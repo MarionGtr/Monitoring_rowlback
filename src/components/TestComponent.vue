@@ -12,30 +12,30 @@ interface Test {
 
 // État local des tests
 const tests = ref<Test[]>([
-  {
-    name: "rowlbackEndToEndClients",
-    description: "Vérification du flux de connexion utilisateur avec différents rôles",
-    status: "PASSED",
-    assertions: "20 assertions passed."
-  },
-  {
-    name: "rowlbackResponsive",
-    description: "Test de la fonctionnalité de recherche avancée avec filtres multiples",
-    status: "PASSED",
-    assertions: "20 assertions passed."
-  },
-  {
-    name: "rowlbackSendForm",
-    description: "Validation de l'affichage responsive sur différentes tailles d'écran",
-    status: "FAILED",
-    assertions: "1 assertion failed."
-  },
-  {
-    name: "example",
-    description: "Contrôle des animations et transitions lors du chargement de page",
-    status: "WARNING",
-    assertions: "4 assertions passed."
-  }
+  // {
+    // name: "rowlbackEndToEndClients",
+  //   description: "Vérification du flux de connexion utilisateur avec différents rôles",
+  //   status: "PASSED",
+  //   assertions: "20 assertions passed."
+  // },
+  // {
+  //   name: "rowlbackResponsive",
+  //   description: "Test de la fonctionnalité de recherche avancée avec filtres multiples",
+  //   status: "PASSED",
+  //   assertions: "20 assertions passed."
+  // },
+  // {
+  //   name: "rowlbackSendForm",
+  //   description: "Validation de l'affichage responsive sur différentes tailles d'écran",
+  //   status: "FAILED",
+  //   assertions: "1 assertion failed."
+  // },
+  // {
+  //   name: "example",
+  //   description: "Contrôle des animations et transitions lors du chargement de page",
+  //   status: "WARNING",
+  //   assertions: "4 assertions passed."
+  // }
 ]);
 
 // Compteurs de statistiques
