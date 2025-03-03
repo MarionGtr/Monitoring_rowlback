@@ -15,9 +15,6 @@ const currentClientId = computed(() => {
   return null;
 });
 
-    <router-link to="/">Accueil</router-link>
-    <span class="title">MONITORING</span>
-
 
 // Obtenir le nom du client actuel si disponible
 const currentClientName = computed(() => {
@@ -34,7 +31,7 @@ const currentClientName = computed(() => {
       <router-link to="/" >Accueil</router-link>
       <span class="title">MONITORING</span>
   </nav>
-  </template>
+</template>
 
 <style lang="scss" scoped>
 
