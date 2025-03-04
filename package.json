@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start:external": "node start-with-external.js",
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
@@ -18,9 +19,10 @@
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.3.1",
-    "pinia": "^3.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "pinia": "^3.0.1",
     "sass": "^1.85.0",
     "scss": "^0.2.4",
     "vue": "^3.5.13",
