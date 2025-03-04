@@ -206,7 +206,7 @@ onMounted(async () => {
             ]">
               {{ test.status === 'PENDING' ? 'PENDING' : test.status }}
             </button>
-            <h5>{{ test.assertions }}</h5>
+            
             <div class="buttonTest">
               <button @click="showDetails(test.id)">DETAILS</button>
               <button @click="runTest(test.id)" :disabled="isLoading && selectedTest === test.id">
@@ -280,20 +280,15 @@ ul {
 
 li {
   display: flex;
-  gap: 4vw;
+  gap: 2vw;
   align-items: center;
   flex-wrap: wrap;
 }
 
-li h5{
-  display: flex;
-  width: 10vw;
-  align-items: center;
+li p{
+  width: 4vw;
 }
 
-li p{
-  width: 30vw;
-}
 
 button {
   padding: 3px;
@@ -310,7 +305,7 @@ button:disabled {
 }
 
 body{
-  font-size: larger;
+  font-size: large;
 }
 
 /* Classes pour les états des boutons */
@@ -339,7 +334,7 @@ body{
 .test-header {
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  width: 20vw;
 }
 
 .test-name {
@@ -356,6 +351,7 @@ body{
 .test-description {
   font-style: italic;
   color: #555;
+  width: 20vw;
 }
 
 /* Indicateur de chargement */
