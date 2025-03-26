@@ -67,6 +67,9 @@ module.exports = {
           args: [
             '--window-size=590,1044',  // Taille iPhone 12 Pro
             '--auto-open-devtools-for-tabs',  // Ouvre les devtools par défaut
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-web-security',
             '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1'  // User agent mobile
           ],
           mobileEmulation: {

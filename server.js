@@ -17,7 +17,7 @@ const PORT = 3001;
 
 // Configuration des chemins vers le projet Nightwatch externe
 // Chemin pour TROUVER les tests
-const EXTERNAL_TESTS_PATH = process.env.NIGHTWATCH_PROJECT_PATH || "/home/rowlback/Documents/Projets/nightwatchjs/nightwatch";
+const EXTERNAL_TESTS_PATH = process.env.NIGHTWATCH_PROJECT_PATH || "/Users/juliennicolle/ForEachAcademy/ProjetsRowlback/nightwatchjs/nightwatch ";
 // Chemin pour EXÉCUTER les tests (un niveau plus haut)
 const EXTERNAL_EXECUTION_PATH = path.dirname(EXTERNAL_TESTS_PATH);
 
@@ -39,7 +39,7 @@ app.use(cors());
 app.use(express.json());
 
 // Route pour lancer un test spécifique du projet externe
-app.get("/run-test/:testName", (req, res) => {
+app.get("/run-test/:testName(*)", (req, res) => {
   const testName = req.params.testName;
   console.log(`Lancement du test Nightwatch externe: ${testName}`);
 
