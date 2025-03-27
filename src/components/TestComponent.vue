@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
+import { useRoute } from "vue-router";
 
 // Structure pour les données des tests
 interface Test {
@@ -10,6 +11,7 @@ interface Test {
   status: "PASSED" | "FAILED" | "WARNING" | "PENDING";
   assertions: string;
   results?: string;
+  client?: string;   // Ajout du client associé au test
 }
 
 // Description par défaut pour les tests chargés dynamiquement
@@ -17,14 +19,30 @@ const getDefaultDescription = (testName: string): string => {
   return `Test ${testName.replace(/-/g, ' ').replace(/_/g, ' ')}`;
 };
 
+const route = useRoute();
+const currentClientId = computed(() => route.params.id as string);
+
 // État local des tests (sera remplacé par les tests chargés du serveur)
-const tests = ref<Test[]>([]);
+const allTests = ref<Test[]>([]);
+const tests = computed(() => {
+  // Si nous sommes sur la page d'un client spécifique, filtrer les tests
+  if (currentClientId.value) {
+    return allTests.value.filter(test => {
+      // Utiliser le nom du client dans le chemin du test ou dans la propriété client
+      const isForClient = test.client === currentClientId.value ||
+        test.path.toLowerCase().includes(currentClientId.value.toLowerCase());
+      return isForClient;
+    });
+  }
+  // Sinon, retourner tous les tests
+  return allTests.value;
+});
 
 // Compteurs de statistiques
-const totalTests = ref(tests.value.length);
-const passedTests = ref(tests.value.filter(t => t.status === "PASSED").length);
-const warningTests = ref(tests.value.filter(t => t.status === "WARNING").length);
-const failedTests = ref(tests.value.filter(t => t.status === "FAILED").length);
+const totalTests = computed(() => tests.value.length);
+const passedTests = computed(() => tests.value.filter(t => t.status === "PASSED").length);
+const warningTests = computed(() => tests.value.filter(t => t.status === "WARNING").length);
+const failedTests = computed(() => tests.value.filter(t => t.status === "FAILED").length);
 
 // État pour l'indication de chargement
 const isLoading = ref(false);
@@ -37,19 +55,14 @@ const runTest = async (testId: string) => {
   selectedTest.value = testId;
 
   // Mettre à jour l'état du test pour indiquer qu'il est en cours d'exécution
-  const testIndex = tests.value.findIndex(t => t.id === testId);
+  const testIndex = allTests.value.findIndex(t => t.id === testId);
   if (testIndex !== -1) {
     // Sauvegarder le statut précédent pour les compteurs
-    const previousStatus = tests.value[testIndex].status;
+    const previousStatus = allTests.value[testIndex].status;
 
     // Mettre à jour le statut
-    tests.value[testIndex].status = "PENDING";
-    tests.value[testIndex].assertions = "Test en cours d'exécution...";
-
-    // Mettre à jour les compteurs
-    if (previousStatus === "PASSED") passedTests.value--;
-    if (previousStatus === "FAILED") failedTests.value--;
-    if (previousStatus === "WARNING") warningTests.value--;
+    allTests.value[testIndex].status = "PENDING";
+    allTests.value[testIndex].assertions = "Test en cours d'exécution...";
   }
 
   try {
@@ -59,7 +72,7 @@ const runTest = async (testId: string) => {
     if (data.success) {
       // Mettre à jour l'état du test avec les résultats
       if (testIndex !== -1) {
-        tests.value[testIndex].results = data.output;
+        allTests.value[testIndex].results = data.output;
 
         // Analyser les résultats pour déduire le statut et le nombre d'assertions
         let assertionsCount = 0;
@@ -78,33 +91,26 @@ const runTest = async (testId: string) => {
           newStatus = "WARNING";
         }
 
-        // Mettre à jour les compteurs
-        if (newStatus === "PASSED") passedTests.value++;
-        if (newStatus === "FAILED") failedTests.value++;
-        if (newStatus === "WARNING") warningTests.value++;
-
         // Mettre à jour le test
-        tests.value[testIndex].status = newStatus;
-        tests.value[testIndex].assertions = failedAssertions > 0
+        allTests.value[testIndex].status = newStatus;
+        allTests.value[testIndex].assertions = failedAssertions > 0
           ? `${failedAssertions} assertion(s) échouée(s) sur ${assertionsCount}`
           : `${assertionsCount} assertion(s) réussie(s)`;
       }
     } else {
       // En cas d'erreur dans l'exécution du test
       if (testIndex !== -1) {
-        tests.value[testIndex].status = "FAILED";
-        tests.value[testIndex].results = data.error || "Erreur lors de l'exécution du test";
-        tests.value[testIndex].assertions = "Échec de l'exécution";
-        failedTests.value++;
+        allTests.value[testIndex].status = "FAILED";
+        allTests.value[testIndex].results = data.error || "Erreur lors de l'exécution du test";
+        allTests.value[testIndex].assertions = "Échec de l'exécution";
       }
     }
   } catch (error) {
     console.error("Erreur lors de l'exécution du test:", error);
     if (testIndex !== -1) {
-      tests.value[testIndex].status = "FAILED";
-      tests.value[testIndex].results = "Erreur de connexion au serveur de tests";
-      tests.value[testIndex].assertions = "Erreur de connexion";
-      failedTests.value++;
+      allTests.value[testIndex].status = "FAILED";
+      allTests.value[testIndex].results = "Erreur de connexion au serveur de tests";
+      allTests.value[testIndex].assertions = "Erreur de connexion";
     }
   } finally {
     isLoading.value = false;
@@ -114,6 +120,26 @@ const runTest = async (testId: string) => {
 // Méthode pour afficher les détails d'un test
 const showDetails = (testName: string) => {
   selectedTest.value = selectedTest.value === testName ? null : testName;
+};
+
+// Extraire le client à partir du chemin du test
+const getClientFromPath = (path: string): string | null => {
+  // Si le chemin contient un des noms de clients connus, on l'associe à ce client
+  const clientNames = [
+    "rowlback", "beauty-tech", "electro-depot", "dior", "tag-heuer", 
+    "guerlain", "motoblouz", "nacon", "vds", "bigben", "viseo", 
+    "grande-epicerie", "groupe-fremeaux", "SDG-distribution"
+  ];
+  
+  const lowerPath = path.toLowerCase();
+  
+  for (const clientName of clientNames) {
+    if (lowerPath.includes(clientName.toLowerCase())) {
+      return clientName;
+    }
+  }
+  
+  return null;
 };
 
 // Chargement initial des tests disponibles du projet externe
@@ -127,23 +153,23 @@ onMounted(async () => {
 
     if (data.success && data.tests.length > 0) {
       // Transformation des données de tests reçues
-      const externalTests = data.tests.map(test => ({
-        id: test.id,
-        name: test.name,
-        path: test.path,
-        description: getDefaultDescription(test.name),
-        status: "PENDING",
-        assertions: "En attente d'exécution"
-      }));
+      const externalTests = data.tests.map(test => {
+        // Essayer de déterminer le client associé au test
+        const client = test.client || getClientFromPath(test.path);
+        
+        return {
+          id: test.id,
+          name: test.name,
+          path: test.path,
+          description: getDefaultDescription(test.name),
+          status: "PENDING",
+          assertions: "En attente d'exécution",
+          client: client
+        };
+      });
 
       // Remplacer complètement les tests avec ceux du projet externe
-      tests.value = externalTests;
-
-      // Mettre à jour les compteurs
-      totalTests.value = tests.value.length;
-      passedTests.value = 0;
-      warningTests.value = 0;
-      failedTests.value = 0;
+      allTests.value = externalTests;
 
       console.log(`${externalTests.length} tests chargés depuis le projet externe`);
     } else {
@@ -152,7 +178,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Erreur lors du chargement des tests disponibles:", error);
     // Afficher un message d'erreur dans l'interface
-    tests.value = [{
+    allTests.value = [{
       id: "error",
       name: "Erreur de chargement",
       path: "",
@@ -170,7 +196,7 @@ onMounted(async () => {
   <main>
     <div class="bodyTest">
       <div class="headerTest">
-        <div><h3>TOUS LES TESTS</h3></div>
+        <div><h3>TESTS {{ currentClientId ? `POUR ${currentClientId.toUpperCase()}` : 'TOUS LES TESTS' }}</h3></div>
         <div class="recapTest">
           <h3>TOTAL</h3> <h3>{{ totalTests }}</h3>
           <h4>PASSED</h4> <h3>{{ passedTests }}</h3>
@@ -186,8 +212,8 @@ onMounted(async () => {
 
       <!-- Message si aucun test n'est trouvé -->
       <div v-else-if="tests.length === 0" class="no-tests-found">
-        <p>Aucun test n'a été trouvé dans le projet externe.</p>
-        <p>Vérifiez le chemin configuré dans server.js (EXTERNAL_NIGHTWATCH_PROJECT).</p>
+        <p>Aucun test n'a été trouvé {{ currentClientId ? `pour le client ${currentClientId}` : 'dans le projet externe' }}.</p>
+        <p v-if="!currentClientId">Vérifiez le chemin configuré dans server.js (EXTERNAL_NIGHTWATCH_PROJECT).</p>
       </div>
 
       <!-- Liste des tests -->
@@ -197,6 +223,7 @@ onMounted(async () => {
             <div class="test-header">
               <p class="test-name">{{ test.name }}</p>
               <span class="test-path">{{ test.path }}</span>
+              <span v-if="test.client" class="test-client">Client: {{ test.client }}</span>
             </div>
             <p class="test-description">{{ test.description }}</p>
             <button :class="[
@@ -346,6 +373,12 @@ body{
   font-size: 0.8em;
   color: #666;
   margin-bottom: 5px;
+}
+
+.test-client {
+  font-size: 0.8em;
+  color: #007bff;
+  font-weight: bold;
 }
 
 .test-description {
