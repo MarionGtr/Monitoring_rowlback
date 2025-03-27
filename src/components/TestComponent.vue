@@ -245,6 +245,7 @@ onMounted(async () => {
             <div v-if="selectedTest === test.id" class="testDetails">
               <h4>Détails du test : {{ test.name }}</h4>
               <p><strong>Chemin:</strong> {{ test.path }}</p>
+              <p><strong>Mode:</strong> Headless (sans interface graphique)</p>
               <pre v-if="test.results">{{ test.results }}</pre>
               <p v-else>Aucun résultat disponible. Lancez le test pour voir les détails.</p>
             </div>
@@ -256,6 +257,18 @@ onMounted(async () => {
 </template>
 
 <style lang="scss">
+.headless-badge {
+  display: inline-block;
+  background-color: $neon;
+  color: $onyx;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .bodyTest {
   background-color: $blue;
   display: flex;

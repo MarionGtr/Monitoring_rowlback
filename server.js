@@ -59,8 +59,9 @@ app.get("/run-test/:testName(*)", (req, res) => {
   const relativePath = path.relative(EXTERNAL_EXECUTION_PATH, testPath);
   console.log(`Chemin relatif du test: ${relativePath}`);
 
-  // Exécuter le test depuis le dossier d'exécution
-  const command = `cd "${EXTERNAL_EXECUTION_PATH}" && npx nightwatch "${relativePath}"`;
+  // Exécuter le test depuis le dossier d'exécution en mode headless
+  // Nous ajoutons l'option --env chrome.headless pour forcer le mode headless
+  const command = `cd "${EXTERNAL_EXECUTION_PATH}" && npx nightwatch "${relativePath}" --env chrome.headless`;
   console.log(`Commande exécutée: ${command}`);
 
   exec(command, (error, stdout, stderr) => {
@@ -170,12 +171,12 @@ app.get("/tests", (req, res) => {
   }
 });
 
-// Route pour lancer tous les tests (compatibilité rétroactive)
+// Route pour lancer tous les tests (compatibilité rétroactive) - aussi en mode headless
 app.get("/launch", (req, res) => {
-  console.log("Lancement de tous les tests Nightwatch du projet externe...");
+  console.log("Lancement de tous les tests Nightwatch du projet externe en mode headless...");
 
-  // Exécuter depuis le dossier parent
-  exec(`cd "${EXTERNAL_EXECUTION_PATH}" && npx nightwatch nightwatch/tests/`, (error, stdout, stderr) => {
+  // Exécuter depuis le dossier parent avec l'option headless
+  exec(`cd "${EXTERNAL_EXECUTION_PATH}" && npx nightwatch nightwatch/tests/ --env chrome.headless`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Erreur: ${stderr}`);
       res.status(500).send(`Erreur: ${stderr}`);
